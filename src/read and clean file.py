@@ -2,8 +2,8 @@ import pandas as pd
 import glob
 import os
 
-path = 'C:/Users/bronwen.barratt/Desktop/Hackathon/Hackathon_repo/bro_code/data'
-#Ayesha pls help: os.getcwd() does not work since data is not in the src folder so idk what to do
+path = os.getcwd()
+path = path.replace("src", "data")
 input_files = glob.glob(path + '\*.csv')
 
 df_list = []

@@ -1,5 +1,5 @@
 def sort_categories(width, height):
-    maximum = max(width,height) #convert to int if not already
+    maximum = max(width,height)
     addition = width + height
     if maximum < 750 and addition <= 1150:
         category = 'category_1'
@@ -12,3 +12,4 @@ def sort_categories(width, height):
     elif 2100 <= maximum:
         category = 'category_5'
     print(category)
+
