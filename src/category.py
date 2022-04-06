@@ -1,6 +1,15 @@
 import pandas as pd
 import numpy as np
 
+"""
+Category class:
+- gets cleaned data
+- places ducts into categories using size columns
+- calculates total m^2 for that category in that duct file
+- calculates total amount in R for BOQ (either dictionary or dataframe format)
+- information gets passed to BOQ 
+"""
+
 
 class Category:
     """
@@ -27,6 +36,13 @@ class Category:
         return self.data
 
     def get_calculated_area(self, count, area, surface_area):
+        """
+        Move to duct
+        :param count:
+        :param area:
+        :param surface_area:
+        :return:
+        """
         if area != 0:
             calculated_area = area * count
         else:
@@ -35,6 +51,10 @@ class Category:
         return calculated_area
 
     def calculate_total_area(self):
+        """
+        Move to duct
+        :return:
+        """
         self.data = self.convert_to_float()
         self.data['Calculated Area m^2'] = self.data.apply(
             lambda x: self.get_calculated_area(x['Count'], x['Area'], x['Surface Area']),
