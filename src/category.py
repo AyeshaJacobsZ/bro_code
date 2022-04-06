@@ -24,40 +24,4 @@ class Category:
         self.category_number = category_number  # for if x.category_number == 1, cost..
         self.data = data
 
-    def convert_to_float(self):
-        """
-        Might have to go in clean data/duct class
-        :return:
-        """
-        self.data["Area"] = self.data["Area"].map(lambda x: float(str(x)[:-3]))
-        self.data["Count"] = self.data["Count"].map(lambda x: float(str(x)))
-        self.data["Surface Area"] = self.data["Surface Area"].map(lambda x: float(str(x)[:-3]))
-
-        return self.data
-
-    def get_calculated_area(self, count, area, surface_area):
-        """
-        Move to duct
-        :param count:
-        :param area:
-        :param surface_area:
-        :return:
-        """
-        if area != 0:
-            calculated_area = area * count
-        else:
-            calculated_area = surface_area * count
-
-        return calculated_area
-
-    def calculate_total_area(self):
-        """
-        Move to duct
-        :return:
-        """
-        self.data = self.convert_to_float()
-        self.data['Calculated Area m^2'] = self.data.apply(
-            lambda x: self.get_calculated_area(x['Count'], x['Area'], x['Surface Area']),
-            axis=1)
-        return self.data
 

@@ -4,25 +4,20 @@ from src.category import Category
 from src.duct import Duct
 from src.csv_writer import CsvWriter
 
-filename = "Duct Fitting Schedule Low Pressure Insulated Cladded Rect.csv"
 path = os.getcwd()
-print(path)
-data = pd.read_csv(f"{path}\data\\{filename}")
-data = data[data["Insulation Type"].notna()]
 
-# print(data)
 
-cat = Category(1, data)
+data = Duct(f"{path}\data")
+data = data.read_data()
+print(data)
 
-print(cat.calculate_total_area())
+print(data.keys())
+for key in data.keys():
+    print(key)
 
-df = Duct(f"Duct Fitting Schedule Low Pressure Insulated Cladded Rect.csv")
-
-df = df.read_data()
-
-df = CsvWriter(filename=filename, data=df)
-
-df.write_to_csv()
+for key, value in data.items():
+    print(key)
+    print(value)
 
 
 
