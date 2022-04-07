@@ -3,23 +3,15 @@ import numpy as np
 
 """
 Category class:
-- gets cleaned data 0
-- places ducts into categories using size columns 0
-- calculates total m^2 for that category in that duct file 0
-- calculates total amount in R for BOQ (either dictionary or dataframe format) 0
+- gets cleaned data 1
+- places ducts into categories using size columns 1
+- calculates total m^2 for that category in that duct file 1
+- calculates total amount in R for BOQ (either dictionary or dataframe format) 1
 - information gets passed to BOQ 0
 """
 
 
 class Category:
-    """
-    Gets cleaned data in the category, whole row
-    Distributes data into categories
-    Calculates sum to be put into csv and xlsx
-    maybe category inherits form Duct? - for any duct dataset it can do anything, but for specific
-    category it could do something specific?
-    """
-
     def __init__(self, data):
         self.data = data
 
@@ -28,15 +20,15 @@ class Category:
         maximum = max(width, height)
         addition = width + height
         if maximum < 750 and addition <= 1150:
-            category = 'category_1'
+            category = 1
         elif maximum < 750 and addition > 1150:
-            category = 'category_2'
+            category = 2
         elif 750 <= maximum < 1350:
-            category = 'category_3'
+            category = 3
         elif 1350 <= maximum < 2100:
-            category = 'category_4'
+            category = 4
         elif 2100 <= maximum:
-            category = 'category_5'
+            category = 5
 
         return category
 
@@ -45,8 +37,37 @@ class Category:
         return data
 
     def sum_area_in_categories(self, data):
-        summed_categories = data[['Area', 'category']].groupby(['category']).sum()
+        summed_categories = data[['Area', 'category', 'Count']].groupby(['category']).sum()
         return summed_categories
+
+    def categorize(self):
+        for key, value in self.data.items():
+            categories = self.sort_data_into_categories(value)
+            categories = self.sum_area_in_categories(categories)
+            self.data[key] = categories
+
+        return self.data
+
+    def boq(self):
+        data = self.categorize()
+        rate = {1: 1, 2: 2.5, 3: 4, 4: 5, 5: 6}
+        result = {}
+
+        for key, value in data.items():
+            print(key)
+            print(value)
+            value = value.reset_index()
+            value['rate'] = value['category'].map(rate)
+            value['cost'] = value['Area'] * value['rate']
+            value.drop(columns=["Area"], inplace=True)
+            value.columns = ['category', 'quantity', 'rate', 'cost']
+            total = value['cost'].sum(axis=0)
+            last_row = pd.DataFrame([['total', total, '', '']], columns=['category', 'quantity', 'rate', 'cost'])
+            value = pd.concat([value, last_row], axis=0)
+            result[key] = value
+
+        return result
+
 
 
 
