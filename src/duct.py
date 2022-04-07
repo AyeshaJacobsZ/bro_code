@@ -22,19 +22,7 @@ class Duct:
         self.folder_location = folder_location
         self.data = self.read_data()
 
-    def read_data(self):
-        path = os.getcwd()
-        files = glob.glob(self.folder_location + '\*.csv')
-        duct = {}
-        for file in files:
-            key = file.replace(f"{path}\\data\\", "")
-            # self.keys.append(key)
-            data = pd.read_csv(file)
-            data = self.clear_nan_rows(data)
-            data = self.convert_to_float(data)
-            data = self.calculate_total_area(data)
-            duct[key] = data
-        return duct
+
 
     def convert_to_float(self, data):
 
@@ -57,6 +45,33 @@ class Duct:
 
         return calculated_area
 
+    def split_size(self, data):
+        needed_cols = data['Size']
+        split_size = needed_cols.str.split('[x|-]', expand=True)
+
+        cols = len(split_size.columns)
+
+        while cols < 6:
+            split_size[cols] = np.nan
+            split_size[cols + 1] = np.nan
+            cols = cols + 2
+
+        # split_size = pd.DataFrame()
+        split_size.columns = ['width_1', 'height_1', 'width_2', 'height_2', 'width_3', 'height_3']
+
+        # converting data type to float
+        split_size_float = split_size.astype(float)
+
+        # getting min width and height
+        split_size_float['min_width'] = split_size_float.iloc[:,[0,2,4]].min(axis=1)
+        split_size_float['min_height'] = split_size_float.iloc[:,[1,3,5]].min(axis=1)
+
+        # merging dfs
+        combined_df = pd.concat([data, split_size_float], axis=1)
+
+        return combined_df
+        # return needed_cols
+
     def calculate_total_area(self, data):
 
         data = self.convert_to_float(data)
@@ -65,4 +80,5 @@ class Duct:
             axis=1)
 
         return data
+
 
