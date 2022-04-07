@@ -3,11 +3,11 @@ import numpy as np
 
 """
 Category class:
-- gets cleaned data
-- places ducts into categories using size columns
-- calculates total m^2 for that category in that duct file
-- calculates total amount in R for BOQ (either dictionary or dataframe format)
-- information gets passed to BOQ 
+- gets cleaned data 0
+- places ducts into categories using size columns 0
+- calculates total m^2 for that category in that duct file 0
+- calculates total amount in R for BOQ (either dictionary or dataframe format) 0
+- information gets passed to BOQ 0
 """
 
 
@@ -20,8 +20,26 @@ class Category:
     category it could do something specific?
     """
 
-    def __init__(self, category_number, data):
-        self.category_number = category_number  # for if x.category_number == 1, cost..
+    def __init__(self, data):
         self.data = data
+
+    def sort_categories(self, width, height):
+
+        global category
+        maximum = max(width, height)
+        addition = width + height
+        if maximum < 750 and addition <= 1150:
+            category = 'category_1'
+        elif maximum < 750 and addition > 1150:
+            category = 'category_2'
+        elif 750 <= maximum < 1350:
+            category = 'category_3'
+        elif 1350 <= maximum < 2100:
+            category = 'category_4'
+        elif 2100 <= maximum:
+            category = 'category_5'
+
+        return category
+
 
 
