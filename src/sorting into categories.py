@@ -18,7 +18,16 @@ def sort_categories(width, height):
     return category
 
 file['category'] = file.apply(lambda x: sort_categories(x['min_width'], x['min_height']), axis=1)
-print(file)
+# print(file)
 
-result_categories = file[['Area', 'category']].groupby(['category']).sum()
+result_categories = file[['Area', 'category', 'Count']].groupby(['category']).sum()
+print(result_categories.reset_index())
+result_categories.reset_index(inplace=True)
+
+rate = {1:1, 2:2.5, 3:4, 4:5, 5:6}
+result_categories['rate'] = result_categories['category'].map(rate)
+result_categories['cost'] = result_categories['Area'] * result_categories['rate']
 print(result_categories)
+
+total = result_categories['cost'].sum(axis=0)
+print("total,",total)

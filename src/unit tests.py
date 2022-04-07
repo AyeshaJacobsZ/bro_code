@@ -17,8 +17,8 @@ class TestClass(pytest.TestCase):
 
     def test_get_calculated_area(self):
         data = pd.DataFrame([2,5,0], columns = ['Count', 'Area', 'Surface Area'])
-        duct_1 = Duct(data)
-        calculated_area = duct_1.get_calculated_area()
+        duct = Duct(data)
+        calculated_area = duct.get_calculated_area()
         self.assertEqual(calculated_area, 10)
 
     def test_calculate_total_area(self):
@@ -26,7 +26,12 @@ class TestClass(pytest.TestCase):
 
     def test_sort_categories(self):
         data = pd.DataFrame([700,1000], columns = ['min_width', 'min_height'])
-        duct_1 = Category(data)
-        category = duct_1.sort_categories()
+        duct = Category(data)
+        category = duct.sort_categories()
         self.assertEqual(category, 3)
 
+    def test_sum_area_in_categories(self):
+        data = pd.DataFrame([[2.280,3],[1.510,3]], columns = ['Area', 'category'])
+        duct = Category(data)
+        sum_category = duct.sum_area_in_categories()
+        self.assertEqual(sum_category, 3.790)
