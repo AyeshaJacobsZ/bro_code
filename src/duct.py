@@ -8,11 +8,10 @@ import numpy as np
 
 """
 Duct class: 
-- reads data
-- cleans data
-- gets sizes
-- gets total area needed for calculation
-- data gets pased to Category
+- cleans data 1
+- gets sizes 0
+- gets total area needed for calculation 1
+- data gets pased to Category 0
 """
 
 
@@ -23,12 +22,10 @@ class Duct:
         self.data = self.read_data()
 
 
-
     def convert_to_float(self, data):
-
         data["Area"] = data["Area"].map(lambda x: float((str(x).replace("m\u00b2", ""))))
         data["Surface Area"] = data["Surface Area"].map(lambda x: float((str(x).replace("m\u00b2", ""))))
-        data["Area"] = data["Area"].map(lambda x: float(x))
+        data["Count"] = data["Count"].map(lambda x: float(x))
 
         return data
 
