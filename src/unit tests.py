@@ -29,3 +29,4 @@ class TestClass(pytest.TestCase):
         duct_1 = Category(data)
         category = duct_1.sort_categories()
         self.assertEqual(category, 3)
+
