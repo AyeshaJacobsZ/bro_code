@@ -23,9 +23,8 @@ class Category:
     def __init__(self, data):
         self.data = data
 
-    def sort_categories(self, width, height):
+    def get_categories(self, width, height):
 
-        global category
         maximum = max(width, height)
         addition = width + height
         if maximum < 750 and addition <= 1150:
@@ -40,6 +39,14 @@ class Category:
             category = 'category_5'
 
         return category
+
+    def sort_data_into_categories(self, data):
+        data['category'] = data.apply(lambda x: self.get_categories(x['min_width'], x['min_height']), axis=1)
+        return data
+
+    def sum_area_in_categories(self, data):
+        summed_categories = data[['Area', 'category']].groupby(['category']).sum()
+        return summed_categories
 
 
 
