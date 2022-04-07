@@ -8,11 +8,10 @@ import numpy as np
 
 """
 Duct class: 
-- reads data
-- cleans data
-- gets sizes
-- gets total area needed for calculation
-- data gets pased to Category
+- cleans data 1
+- gets sizes 0
+- gets total area needed for calculation 1
+- data gets pased to Category 0
 """
 
 
@@ -28,7 +27,6 @@ class Duct:
         duct = {}
         for file in files:
             key = file.replace(f"{path}\\data\\", "")
-            # self.keys.append(key)
             data = pd.read_csv(file)
             data = self.clear_nan_rows(data)
             data = self.convert_to_float(data)
@@ -37,10 +35,9 @@ class Duct:
         return duct
 
     def convert_to_float(self, data):
-
         data["Area"] = data["Area"].map(lambda x: float((str(x).replace("m\u00b2", ""))))
         data["Surface Area"] = data["Surface Area"].map(lambda x: float((str(x).replace("m\u00b2", ""))))
-        data["Area"] = data["Area"].map(lambda x: float(x))
+        data["Count"] = data["Count"].map(lambda x: float(x))
 
         return data
 

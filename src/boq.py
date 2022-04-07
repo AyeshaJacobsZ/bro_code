@@ -4,7 +4,7 @@ import openpyxl
 
 """
 BOQ class:
-- gets data in df/dict format form Category class
+- gets data in data/dict format form Category class
 - puts in correct formatting for csv / excel writer
 - passes information to csv / excel writer (either in code or by inheritance)
 """
