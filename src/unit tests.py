@@ -35,3 +35,9 @@ class TestClass(pytest.TestCase):
         duct = Category(data)
         sum_category = duct.sum_area_in_categories()
         self.assertEqual(sum_category, 3.790)
+
+    def test_split_size(self):
+        data = pd.DataFrame([[800,200,450,200,200,450]], columns = ['width_1', 'height_1', 'width_2', 'height_2', 'width_3', 'height_3'])
+        duct = Duct(data)
+        minimum_value = duct.split_size()
+        self.assertEqual(minimum_value, 450, 200)
