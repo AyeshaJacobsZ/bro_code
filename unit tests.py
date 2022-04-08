@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
-from duct import Duct
-
+from src.duct import Duct
+from src.category import Category
 class TestClass(pytest.TestCase):
 
     def test_convert_to_float(self):
@@ -16,9 +16,9 @@ class TestClass(pytest.TestCase):
         pass
 
     def test_get_calculated_area(self):
-        data = pd.DataFrame([2,5,0], columns = ['Count', 'Area', 'Surface Area'])
-        duct = Duct(data)
-        calculated_area = duct.get_calculated_area()
+        data = pd.DataFrame([2, 5, 0], columns=['Count', 'Area', 'Surface Area'])
+        duct = Duct()
+        calculated_area = duct.calculate_total_area(data)
         self.assertEqual(calculated_area, 10)
 
     def test_calculate_total_area(self):
@@ -27,7 +27,7 @@ class TestClass(pytest.TestCase):
     def test_sort_categories(self):
         data = pd.DataFrame([700,1000], columns = ['min_width', 'min_height'])
         duct = Category(data)
-        category = duct.sort_categories()
+        category = duct.get_categories(700 ,1000)
         self.assertEqual(category, 3)
 
     def test_sum_area_in_categories(self):
@@ -37,7 +37,7 @@ class TestClass(pytest.TestCase):
         self.assertEqual(sum_category, 3.790)
 
     def test_split_size(self):
-        data = pd.DataFrame([[800,200,450,200,200,450]], columns = ['width_1', 'height_1', 'width_2', 'height_2', 'width_3', 'height_3'])
+        data = pd.DataFrame([[800,200,450,200,450,200]], columns = ['width_1', 'height_1', 'width_2', 'height_2', 'width_3', 'height_3'])
         duct = Duct(data)
         minimum_value = duct.split_size()
         self.assertEqual(minimum_value, 450, 200)
