@@ -34,15 +34,18 @@ class Category:
 
     def sort_data_into_categories(self, data):
         data['category'] = data.apply(lambda x: self.get_categories(x['min_width'], x['min_height']), axis=1)
+        print(data)
         return data
 
     def sum_area_in_categories(self, data):
-        summed_categories = data[['Area', 'category', 'Count']].groupby(['category']).sum()
+        summed_categories = data[['Calculated Area m\u00b2', 'category', 'Count']].groupby(['category']).sum()
         return summed_categories
 
     def categorize(self):
         for key, value in self.data.items():
             categories = self.sort_data_into_categories(value)
+            if key == 'Duct Fitting Schedule Low Pressure Insulated Cladded Rect.csv':
+                value.to_csv('check.csv')
             categories = self.sum_area_in_categories(categories)
             self.data[key] = categories
 
@@ -58,8 +61,8 @@ class Category:
             # print(value)
             value = value.reset_index()
             value['rate'] = value['category'].map(rate)
-            value['cost'] = value['Area'] * value['rate']
-            value.drop(columns=["Area"], inplace=True)
+            value['cost'] = value['Calculated Area m\u00b2'] * value['rate']
+            value.drop(columns=['Calculated Area m\u00b2'], inplace=True)
             value.columns = ['category', 'quantity', 'rate', 'cost']
             total = value['cost'].sum(axis=0)
             last_row = pd.DataFrame([['total', total, '', '']], columns=['category', 'quantity', 'rate', 'cost'])
