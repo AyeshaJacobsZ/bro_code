@@ -1,14 +1,4 @@
 import pandas as pd
-import numpy as np
-
-"""
-Category class:
-- gets cleaned data 1
-- places ducts into categories using size columns 1
-- calculates total m^2 for that category in that duct file 1
-- calculates total amount in R for BOQ (either dictionary or dataframe format) 1
-- information gets passed to BOQ 0
-"""
 
 
 class Category:
@@ -51,23 +41,30 @@ class Category:
 
         return self.data
 
-    def boq(self):
+    def calculate_rate(self):
         data = self.categorize()
         rate = {1: 1, 2: 2.5, 3: 4, 4: 5, 5: 6}
         result = {}
 
         for key, value in data.items():
-            # print(key)
-            # print(value)
             value = value.reset_index()
             value['rate'] = value['category'].map(rate)
             value['cost'] = value['Calculated Area m\u00b2'] * value['rate']
-            value.drop(columns=['Calculated Area m\u00b2'], inplace=True)
-            value.columns = ['category', 'quantity', 'rate', 'cost']
-            total = value['cost'].sum(axis=0)
-            last_row = pd.DataFrame([['total', total, '', '']], columns=['category', 'quantity', 'rate', 'cost'])
-            value = pd.concat([value, last_row], axis=0)
             result[key] = value
+
+        return result
+
+    def build_boq(self):
+        data = self.calculate_rate()
+        result = {}
+
+        for key, category_data in data.items():
+            category_data.drop(columns=['Calculated Area m\u00b2'], inplace=True)
+            category_data.columns = ['category', 'quantity', 'rate', 'cost']
+            total = category_data['cost'].sum(axis=0)
+            total_row = pd.DataFrame([['total', total, '', '']], columns=['category', 'quantity', 'rate', 'cost'])
+            boq = pd.concat([category_data, total_row], axis=0)
+            result[key] = boq
 
         return result
 

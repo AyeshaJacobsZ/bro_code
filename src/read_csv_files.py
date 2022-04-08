@@ -6,6 +6,7 @@ from src.duct import Duct
 
 class ReadCsv(Duct):
     def __init__(self, folder_location):
+        super().__init__()
         self.folder_location = folder_location
 
     def read_data(self):

@@ -4,10 +4,10 @@ from src.csv_writer import CsvWriter
 from src.read_csv_files import ReadCsv
 
 path = os.getcwd()
-data = ReadCsv(f"{path}\data")
-data = Category(data.read_data())
-result = data.boq()
+duct_input_data = ReadCsv(f"{path}\data")
+duct_input_data = Category(duct_input_data.read_data())
+boq = duct_input_data.build_boq()
 
-for filename, boq in result.items():
+for filename, boq in boq.items():
     export = CsvWriter(f"BOQ_{filename}", boq)
     export.write_to_csv()
