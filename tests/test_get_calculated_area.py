@@ -2,6 +2,7 @@ import pytest
 import pandas as pd
 from src.duct import Duct
 
+
 class TestGetCalculatedArea:
 
     def test_get_calculated_area(self):
