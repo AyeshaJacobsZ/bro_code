@@ -1,8 +1,13 @@
+import os
+from src.category import Category
 from src.csv_writer import CsvWriter
+from src.read_csv_files import ReadCsv
 
+path = os.getcwd()
+data = ReadCsv(f"{path}\data")
+data = Category(data.read_data())
+result = data.boq()
 
-
-if __name__=="__main__":
-    csv_files_path = r'data\\..something with glob?'
-    csv_output = CsvWriter(csv_files_path)
-    csv_output.write_to_csv()
+for filename, boq in result.items():
+    export = CsvWriter(f"BOQ_{filename}", boq)
+    export.write_to_csv()
