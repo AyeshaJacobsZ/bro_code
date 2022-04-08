@@ -6,8 +6,8 @@ from src.read_csv_files import ReadCsv
 path = os.getcwd()
 data = ReadCsv(f"{path}\data")
 data = Category(data.read_data())
-result = data.boq()
+boq = data.build_boq()
 
-for filename, boq in result.items():
+for filename, boq in boq.items():
     export = CsvWriter(f"BOQ_{filename}", boq)
     export.write_to_csv()

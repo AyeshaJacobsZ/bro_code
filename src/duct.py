@@ -3,25 +3,10 @@ import os
 import glob
 import numpy as np
 
-# when duct is instantiated it immediately cleans the data ready to categorize
-# maybe need to keep total column for unit testing
-
-"""
-Duct class: 
-- cleans data 1
-- gets sizes 0
-- gets total area needed for calculation 1
-- data gets pased to Category 0
-"""
-
 
 class Duct:
     def __init__(self):
         pass
-        # self.keys = []
-        # self.folder_location = folder_location
-        # self.data = self.read_data()
-
 
     def convert_to_float(self, data):
         data["Area"] = data["Area"].map(lambda x: float((str(x).replace("m\u00b2", ""))))
