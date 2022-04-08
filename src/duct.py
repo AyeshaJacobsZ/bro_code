@@ -36,7 +36,7 @@ class Duct:
         return pd.concat([data, split_size], axis=1)
 
     def get_minimum_width_and_height(self, data):
-        data = self.split_size(data)
+        # data = self.split_size(data)
         data['min_width'] = data.loc[:, ['width_1', 'width_2', 'width_3']].min(axis=1)
         data['min_height'] = data.loc[:, ['height_1', 'height_2', 'height_3']].min(axis=1)
 
