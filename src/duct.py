@@ -16,10 +16,11 @@ Duct class:
 
 
 class Duct:
-    def __init__(self, folder_location):
+    def __init__(self):
+        pass
         # self.keys = []
-        self.folder_location = folder_location
-        self.data = self.read_data()
+        # self.folder_location = folder_location
+        # self.data = self.read_data()
 
 
     def convert_to_float(self, data):
@@ -34,43 +35,29 @@ class Duct:
         return data
 
     def get_calculated_area(self, count, area, surface_area):
-
-        if area != 0:
-            calculated_area = area * count
-        else:
-            calculated_area = surface_area * count
-
+        calculated_area = area * count if area != 0 else surface_area * count
         return calculated_area
 
     def split_size(self, data):
-        needed_cols = data['Size']
-        split_size = needed_cols.str.split('[x|-]', expand=True)
-
+        split_size = data['Size'].str.split('[x|-]', expand=True)
         cols = len(split_size.columns)
-
         while cols < 6:
             split_size[cols] = np.nan
             split_size[cols + 1] = np.nan
             cols = cols + 2
-
-        # split_size = pd.DataFrame()
         split_size.columns = ['width_1', 'height_1', 'width_2', 'height_2', 'width_3', 'height_3']
+        split_size = split_size.astype(float)
 
-        # converting data type to float
-        split_size_float = split_size.astype(float)
+        return pd.concat([data, split_size], axis=1)
 
-        # getting min width and height
-        split_size_float['min_width'] = split_size_float.iloc[:,[0,2,4]].min(axis=1)
-        split_size_float['min_height'] = split_size_float.iloc[:,[1,3,5]].min(axis=1)
+    def get_minimum_width_and_height(self, data):
+        data = self.split_size(data)
+        data['min_width'] = data.loc[:, ['width_1', 'width_2', 'width_3']].min(axis=1)
+        data['min_height'] = data.loc[:, ['height_1', 'height_2', 'height_3']].min(axis=1)
 
-        # merging dfs
-        combined_df = pd.concat([data, split_size_float], axis=1)
-
-        return combined_df
-        # return needed_cols
+        return data
 
     def calculate_total_area(self, data):
-
         data = self.convert_to_float(data)
         data['Calculated Area m\u00b2'] = data.apply(
             lambda x: self.get_calculated_area(x['Count'], x['Area'], x['Surface Area']),
