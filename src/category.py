@@ -54,8 +54,8 @@ class Category:
         result = {}
 
         for key, value in data.items():
-            print(key)
-            print(value)
+            # print(key)
+            # print(value)
             value = value.reset_index()
             value['rate'] = value['category'].map(rate)
             value['cost'] = value['Area'] * value['rate']

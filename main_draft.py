@@ -13,7 +13,12 @@ data = data.read_data()
 
 cat_data = Category(data)
 cat_data = cat_data.boq()
-print(cat_data['Duct Schedule Medium Pressure Insulated Rect.csv'])
+# print(cat_data['Duct Schedule Medium Pressure Insulated Rect.csv'])
+# print(cat_data)
+
+for filename, boq in cat_data.items():
+    export = CsvWriter(f"BOQ_{filename}", boq)
+    export.write_to_csv()
 # print(cat_data)
 #
 # data = Category(data)

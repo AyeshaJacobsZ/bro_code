@@ -24,7 +24,7 @@ class CsvWriter:
     def write_to_csv(self):
         path = os.getcwd()
         output_path = f"{path}\\output\\csv\\"
-        self.data.to_csv(f"{output_path}{self.filename}")
+        self.data.to_csv(f"{output_path}{self.filename}", index=False)
 
 
 # filename = "Duct Fitting Schedule Low Pressure Insulated Cladded Rect.csv"
