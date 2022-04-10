@@ -1,7 +1,7 @@
 import pandas as pd
 
 file = pd.read_csv('C:/Users/bronwen.barratt/Desktop/Hackathon/min_sizes_test.csv')
-# print(file)
+
 def sort_categories(width, height):
     maximum = max(width,height)
     addition = width + height
@@ -18,7 +18,6 @@ def sort_categories(width, height):
     return category
 
 file['category'] = file.apply(lambda x: sort_categories(x['min_width'], x['min_height']), axis=1)
-# print(file)
 
 result_categories = file[['Area', 'category', 'Count']].groupby(['category']).sum()
 print(result_categories.reset_index())
