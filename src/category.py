@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 class Category:
     def __init__(self, data):
         self.data = data

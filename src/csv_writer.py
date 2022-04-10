@@ -1,6 +1,5 @@
 import os
 
-
 class CsvWriter:
     def __init__(self, filename, data):
         self.filename = filename
