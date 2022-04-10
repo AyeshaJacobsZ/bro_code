@@ -1,6 +1,6 @@
-import pytest
 import pandas as pd
 from src.category import Category
+
 
 class TestSumAreaInCategories:
     def test_sum_area_in_categories_when_called_returns_correct_sum_of_area(self):
