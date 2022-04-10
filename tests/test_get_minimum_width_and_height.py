@@ -1,6 +1,7 @@
 from src.duct import Duct
 import pandas as pd
 
+
 class TestGetMinimumWidthAndHeight:
     def test_get_minimum_width_when_called_returns_correct_minimum_width(self):
         data = pd.DataFrame([[800, 200, 450, 200, 450, 200]],
@@ -33,6 +34,3 @@ class TestGetMinimumWidthAndHeight:
         minimum_height = duct.get_minimum_width_and_height(data)['min_height'].iloc[0]
         minimum_height_type = type(minimum_height)
         assert minimum_height_type != str
-
-
-

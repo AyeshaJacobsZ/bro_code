@@ -1,5 +1,3 @@
-import pytest
-import pandas as pd
 from src.duct import Duct
 
 

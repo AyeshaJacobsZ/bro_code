@@ -24,7 +24,6 @@ class Category:
 
     def sort_data_into_categories(self, data):
         data['category'] = data.apply(lambda x: self.get_categories(x['min_width'], x['min_height']), axis=1)
-        print(data)
         return data
 
     def sum_area_in_categories(self, data):
@@ -34,8 +33,6 @@ class Category:
     def categorize(self):
         for key, value in self.data.items():
             categories = self.sort_data_into_categories(value)
-            if key == 'Duct Fitting Schedule Low Pressure Insulated Cladded Rect.csv':
-                value.to_csv('check.csv')
             categories = self.sum_area_in_categories(categories)
             self.data[key] = categories
 
