@@ -3,7 +3,6 @@ import pandas as pd
 import glob
 from src.duct import Duct
 
-
 class ReadCsv(Duct):
     def __init__(self, folder_location):
         super().__init__()
